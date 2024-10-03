@@ -7,17 +7,20 @@ class SearchInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15.0),
-      child: TextField(
-        decoration: InputDecoration(
-          fillColor: Colors.white,
-          filled: true,
-          hintText: 'Search For Products',
-          border: OutlineInputBorder(
-            borderSide: BorderSide.none,
+    return Padding(
+      padding: EdgeInsets.all(14.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15.0),
+        child: TextField(
+          decoration: InputDecoration(
+            fillColor: Colors.white,
+            filled: true,
+            hintText: 'Search For Products',
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+            ),
+            prefixIcon: Icon(Icons.search),
           ),
-          prefixIcon: Icon(Icons.search),
         ),
       ),
     );
