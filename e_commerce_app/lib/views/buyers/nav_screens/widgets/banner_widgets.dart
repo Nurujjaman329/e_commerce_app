@@ -1,8 +1,29 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
-class BannerWidgets extends StatelessWidget {
-  const BannerWidgets({super.key});
+class BannerWidgets extends StatefulWidget {
+  @override
+  State<BannerWidgets> createState() => _BannerWidgetsState();
+}
+
+class _BannerWidgetsState extends State<BannerWidgets> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  final List _bannerImage = [];
+
+  getBanners() {
+    return _firestore
+        .collection('banners')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        setState(() {
+          _bannerImage.add(doc['image']);
+        });
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
