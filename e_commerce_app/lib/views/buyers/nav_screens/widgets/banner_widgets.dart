@@ -1,5 +1,5 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class BannerWidgets extends StatefulWidget {
@@ -26,21 +26,44 @@ class _BannerWidgetsState extends State<BannerWidgets> {
   }
 
   @override
+  void initState() {
+    getBanners();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       height: 140,
       width: MediaQuery.of(context).size.width - 20,
       decoration: BoxDecoration(
-        color: AppColors.primaryColor,
+        //color: AppColors.primaryColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
-      child: PageView(
-        children: [
-          Center(child: Text('Banner 1')),
-          Center(child: Text('Banner 2')),
-          Center(child: Text('Banner 3')),
-        ],
-      ),
+      child: _bannerImage.isNotEmpty
+          ? CarouselSlider(
+              options: CarouselOptions(
+                //height: 500,
+                autoPlay: true,
+                enlargeCenterPage: true,
+                enableInfiniteScroll: true,
+              ),
+              items: _bannerImage.map((imageUrl) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(
+                        imageUrl,
+                        fit: BoxFit.cover,
+                        // width: MediaQuery.of(context).size.width,
+                      ),
+                    );
+                  },
+                );
+              }).toList(),
+            )
+          : Center(child: CircularProgressIndicator()),
     );
   }
 }
